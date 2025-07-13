@@ -30,6 +30,11 @@ The Summary table provides a high-level overview of the audit results, including
 - **Issue Counting**: Count by severity and resolution
 - **Resolution Status**: Track resolved (R), partially resolved (PR), and unresolved (U) issues
 - **Severity Classification**: Severity should be assessed in context of the specific contract and project
+  - **Critical**: Leads to fund loss, irreversible contract failure
+  - **High**: Can be exploited for denial of service or logic abuse  
+  - **Medium**: Minor financial risk or degraded functionality
+  - **Low**: Non-exploitable but bad practice or maintainability issue
+  - **Info**: Informational, not risky
 - **Total Calculation**: Must equal the full issue count
 
 Update this table as the audit progresses, and finalize it before delivery.
@@ -84,31 +89,25 @@ Total: 9 files across 1 directory
 
 ## System Overview
 
-Document the system's purpose, architecture, and key functionalities. Focus on what the system does, how it works, and what security implications to look for.
+The System Overview should begin by describing the system’s **primary purpose and context** within the Bitcoin Cash ecosystem. Explain what the system is designed to do, the problem it addresses, or the value it provides such as enabling digital identity, decentralized exchange, or facilitating cross-chain functionality.
 
-#### What to Document
+Next, provide a high-level view of the system’s **core components and architecture**. Identify the main contracts, modules, or libraries, and explain how they interact to achieve the intended behavior. Focus on how the system is structured and how its parts work together in the context of Bitcoin Cash’s UTXO model and scripting capabilities.
 
-- **Purpose**: What problem does this system solve?
-- **Architecture**: How do the contracts interact with each other?
-- **Key Functions**: What are the main operations users can perform?
-- **Privileged Roles**: Who has special permissions?
-- **Asset Flows**: How do funds, tokens, or other assets move through the system?
-- **External Dependencies**: What external systems does it rely on?
+The system’s **key functionalities** should be summarized in practical terms:
 
+- What operations can users perform?
+- What inputs and outputs are involved?
+- How do these features enhance performance, flexibility, or the overall user experience?
+
+Include any additional context or characteristics that help clarify how the system behaves in practice. This may include role definitions, protocol flow, assumptions made by the system, or notable usage patterns.
+
+The overview may also cover **security considerations**, including built-in protection mechanisms or areas where users and developers must exercise caution. For example, highlight any script-level validations, reliance on off-chain actors, or transaction construction requirements.
+
+Finally, document any notable **innovations, enhancements, or limitations**. This could include improvements in scripting patterns, removal of legacy functionality, or constraints such as script size limits, fee-related tradeoffs, or unsupported edge cases. Where appropriate, link to technical documentation for deeper guidance.
 
 ## Findings
 
-After completing the audit, organize findings by severity level. If there are findings of a particular severity, create a section for that severity level and list each finding as a subheading.
-
-### Severity Levels
-
-- **Critical**: Leads to fund loss, irreversible contract failure
-- **High**: Can be exploited for denial of service or logic abuse  
-- **Medium**: Minor financial risk or degraded functionality
-- **Low**: Non-exploitable but bad practice or maintainability issue
-- **Info**: Informational, not risky
-
-**Note**: A comprehensive list of known contract vulnerability patterns is maintained in [vectors.md](./vectors.md).
+After completing the audit, organize findings by severity level. If there are findings of a particular severity, create a section for that severity level and list each finding as a subheading. A comprehensive list of known contract vulnerability patterns is maintained in [vectors.md](./vectors.md).
 
 #### Example
 
