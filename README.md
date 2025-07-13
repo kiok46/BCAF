@@ -18,7 +18,7 @@ The following structure is expected to be followed in audit reports based on thi
 - [Scope](#scope)
 - [System Overview](#system-overview)
 - [Findings](#findings)
-- [Unit Test Report](#unit-test-report)
+- [Test Report](#test-report)
 - [Conclusion](#conclusion)
 
 ## Summary
@@ -167,13 +167,51 @@ function withdraw() {
 
 **Update**: Reported
 
-## Unit Test Report
+## Test Report
 
+This section documents the execution results of the project's existing test suite. Run all tests provided by the development team and report the pass/fail status, execution times, and test coverage. This validates that the contracts function as intended and helps identify any runtime issues or edge cases.
+#### Example
 
+```shell
+ PASS  test/unit/import.test.ts
+  imports
+    ✓ should import BitCANNArtifacts with all expected contracts (4 ms)
+
+ PASS  test/e2e/auction.test.ts
+  Auction
+    ✓ should start an auction without fail (649 ms)
+    ✓ should pass without change output (621 ms)
+    ✓ should fail without op return output (84 ms)
+    ✓ should fail setting auction capability to none (67 ms)
+
+------------|---------|----------|---------|---------|----------------------------------------------------------------
+File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                              
+------------|---------|----------|---------|---------|----------------------------------------------------------------
+All files   |   50.54 |    20.58 |   35.71 |   54.11 |                                                                
+ lib        |     100 |      100 |     100 |     100 |                                                                
+  index.ts  |     100 |      100 |     100 |     100 |                                                                
+ test       |      50 |    20.58 |   35.71 |   53.57 |                                                                
+  common.ts |   93.33 |        0 |     100 |     100 | 32                                                             
+  utils.ts  |   41.33 |    21.21 |   35.71 |   44.28 | 33,43-50,55-72,78-83,88-94,100-112,118-126,132-140,164,171-173 
+------------|---------|----------|---------|---------|----------------------------------------------------------------
+Test Suites: 2 passed, 2 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        3.45 s, estimated 4 s
+Ran all test suites.
+```
 
 ## Conclusion
 
-None
+The Conclusion should provide a concise yet thorough summary of the audit’s findings, code changes under review, and the system’s current state of security and readiness. It should begin by briefly outlining the main features or upgrades introduced by the audited code (e.g., new modules, protocol integrations, or architectural changes). If applicable, include references to key pull requests, contracts, or modules added or modified during the audit.
+
+Next, highlight the key results of the audit: how many issues were found, their severities, and how they were handled (e.g., resolved, acknowledged, or deferred). This section may also note any remaining concerns or recommendations for additional improvements such as more comprehensive test coverage, clearer documentation, or further formal analysis.
+
+The Conclusion should offer a qualitative assessment of the codebase’s quality, maintainability, and alignment with the project's goals. Where relevant, it should identify specific trust assumptions, off-chain dependencies, or integration considerations developers and users should keep in mind.
+
+Finally, it’s encouraged to reflect on the development team’s responsiveness and collaboration during the audit process, and provide a final recommendation on whether the system is ready for deployment, pending, or in need of further iteration.
+
+
 
 ---
 

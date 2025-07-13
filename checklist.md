@@ -53,7 +53,8 @@ These vector might not create a vulnerability for some contract systems but thes
 - Unreachable code
 - Variable shadowing
 - Sending mutable or minting tokens to p2pkh or unknown p2sh
-
+- Not enough miner fee
+- Fee or a value below dust
 
 ## Version Control
 
