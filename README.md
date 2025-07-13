@@ -1,16 +1,10 @@
 # Bitcoin Cash Audit Framework (BCAF)
 
-The Bitcoin Cash Audit Framework (BCAF) is a comprehensive standard for auditing smart contracts on the Bitcoin Cash network.
+The Bitcoin Cash Audit Framework (BCAF) is a standard designed to help audit smart contracts on the Bitcoin Cash Blockchain. It offers a structured way to spot security issues, operational risks, and check whether contracts follow best practices.
 
-BCAF delivers a structured methodology for identifying security vulnerabilities, operational risks, and adherence to best practices tailored to the BCH ecosystem.
+Each contract should be systematically evaluated against a checklist of known vectors that may lead to vulnerabilities. When a new vulnerability is discovered, it can be added to the checklist for future reference—allowing other audits to benefit from prior findings. For every failed check or identified issue, the framework requires clear documentation and reporting, ensuring transparency and actionable remediation guidance.
 
-Every contract should be systematically evaluated against a detailed checklist of audit criteria. For each identified vulnerability or failed check, the framework requires clear documentation and reporting, ensuring transparency and actionable remediation guidance.
-
-It is hoped that projects will use this framework as a foundation to write more comprehensive and accurate audit reports.
-
-## Motivation
-
-With the inevitable rise of complex contract structures due to enhanced VM capabilities of Bitcoin Cash, it is important to have a framework that can be used to audit these contracts. Hope is for BCAF to act as a stepping stone or become the go to standard for auditing contracts on Bitcoin Cash.
+As the Bitcoin Cash virtual machine evolves and enables more complex contract structures, BCAF aims to serve as a foundation or even the goto standard for auditing smart contracts on the network.
 
 ---
 
@@ -22,64 +16,43 @@ The following structure is expected to be followed in audit reports based on thi
 
 - [Summary](#summary)
 - [Scope](#scope)
-  - [Example Scope Documentation](#example-scope-documentation)
 - [System Overview](#system-overview)
-  - [What to Document](#what-to-document)
-  - [Example System Overview](#example-system-overview)
 - [Findings](#findings)
   - [Severity Levels](#severity-levels)
-  - [Example Structure](#example-structure)
-- [Framework Components](#framework-components)
-  - [Core Audit Areas](#core-audit-areas)
+- [Conclusion](#conclusion)
 
 ## Summary
 
 The Summary table provides a high-level overview of the audit results, including project details, timeline, technology stack, total number of contracts audited, and issue distribution by severity.
 
-- **Project Information**: Fill in the project name, audit timeline, and technology stack
-- **Total Contracts**: Specify the total number of smart contracts included in the audit
-- **Issue Counting**: Count all findings by severity level and resolution status
+- **Project Information**: Name, audit timeline, and technology stack
+- **Total Contracts**: Number of contracts reviewed
+- **Issue Counting**: Count by severity and resolution
 - **Resolution Status**: Track resolved (R), partially resolved (PR), and unresolved (U) issues
-- **Severity Classification**: Use the severity levels defined in the framework
-- **Total Calculation**: Ensure the sum of all severity levels equals the total issues count
+- **Severity Classification**: Severity should be assessed in context of the specific contract and project
+- **Total Calculation**: Must equal the full issue count
 
-**Note**: The summary table should be updated throughout the audit process and finalized before report delivery.
-
-
-| Field                        | Description                                   | Value                    |
-|------------------------------|-----------------------------------------------|-------------------------|
-| **Name**                     | Official project name                         | Name                  |
-| **Timeline**                 | Audit start and end dates                     | Date range (YYYY-MM-DD) |
-| **Languages**                | Primary smart contract language(s)            | Language (comma-separated) |
-| **Total Contracts**          | Number of smart contracts audited             | (Total contracts)        |
-| **Total Issues**             | Sum of all findings (resolved/partially resolved) | (Total number) (resolved/partially resolved) |
-| **Critical Severity Issues** | Issues that could lead to fund loss           | (Total number) (resolved/partially resolved) |
-| **High Severity Issues**     | Issues that could cause denial of service     | (Total number) (resolved/partially resolved) |
-| **Medium Severity Issues**   | Minor financial risk or degraded functionality | (Total number) (resolved/partially resolved) |
-| **Low Severity Issues**      | Non-exploitable but bad practice issues      | (Total number) (resolved/partially resolved) |
-| **Notes & Additional Info**  | Informational findings and recommendations    | (Total number) (resolved/partially resolved) |
+Update this table as the audit progresses, and finalize it before delivery.
 
 
-### Example Summary Table
-
-| Field                        | Value                    |
-|------------------------------|-------------------------|
-| **Name**                     | BitCANN                  |
-| **Timeline**                 | 2025-07-13 to 2025-07-15 |
-| **Languages**                | CashScript |
-| **Total Contracts**          | 9                        |
-| **Total Issues**             | 0  |
-| **Critical Severity Issues** | 0  |
-| **High Severity Issues**     | 0  |
-| **Medium Severity Issues**   | 0  |
-| **Low Severity Issues**      | 0  |
-| **Notes & Additional Info**  | 0  |
+| Field                        | Description                                         | Example                          |
+|------------------------------|-----------------------------------------------------|----------------------------------|
+| **Name**                     | Official project name                               | BitCANN                          |
+| **Timeline**                 | Audit start and end dates (YYYY-MM-DD)              | 2025-07-13 to 2025-07-15         |
+| **Languages**                | Primary smart contract language(s), comma-separated | CashScript                       |
+| **Total Contracts**          | Number of smart contracts audited                   | 9                                |
+| **Total Issues**             | All findings (resolved/partially resolved)          | 2 (2 resolved)                   |
+| **Critical Severity Issues** | Issues that could lead to fund loss                 | 0                                |
+| **High Severity Issues**     | Issues that could cause denial of service           | 0                                |
+| **Medium Severity Issues**   | Minor financial risk or degraded functionality      | 0                                |
+| **Low Severity Issues**      | Non-exploitable but bad practice issues             | 1 (1 resolved)                   |
+| **Notes & Additional Info**  | Informational findings and recommendations          | 1 (1 resolved)                   |
 
 ## Scope
 
-The Scope section documents the specific codebase, commit hash, and files that were audited. This provides transparency about what was reviewed and helps stakeholders understand the audit coverage. Specify any limitations or exclusions from the audit.
+This section documents the specific codebase, commit hash, and files that were audited. This provides transparency about what was reviewed and helps stakeholders understand the audit coverage. Specify any limitations or exclusions from the audit.
 
-- **Repository Details**: Specify the full repository name and exact commit hash
+- **Repository Details**: Specify the full repository name and exact commit hash and compiler version
 - **File Organization**: Use tree structure to show file hierarchy clearly
 - **Complete Coverage**: List all files that were reviewed
 - **Summary**: Provide a count of total files and directories audited
@@ -87,9 +60,9 @@ The Scope section documents the specific codebase, commit hash, and files that w
 
 **Note**: The scope should be comprehensive and accurate to ensure audit transparency and reproducibility.
 
-#### Example Scope Documentation
+#### Example
 
-We audited the [<span style="text-decoration: underline; color: inherit;">BitCANN/bitcann-contracts</span>](https://github.com/BitCANN/bitcann-contracts) repository at commit [<span style="text-decoration: underline; color: inherit;">a22e234</span>](https://github.com/BitCANN/bitcann-contracts/commit/a22e234843232112da72f23a181d81e8048ffa11).
+We audited the [<span style="text-decoration: underline; color: inherit;">BitCANN/bitcann-contracts</span>](https://github.com/BitCANN/bitcann-contracts) repository at commit [<span style="text-decoration: underline; color: inherit;">a22e234</span>](https://github.com/BitCANN/bitcann-contracts/commit/a22e234843232112da72f23a181d81e8048ffa11) and compiled contracts using `cashc` v0.11.0
 
 In scope were the following files:
 
@@ -135,15 +108,13 @@ After completing the audit, organize findings by severity level. If there are fi
 - **Low**: Non-exploitable but bad practice or maintainability issue
 - **Info**: Informational, not risky
 
-**Note**: There is already a comprehensive list of known ways a contract can become vulnerable. It is encouraged to refer to these existing vulnerability patterns when conducting audits. If a vulnerability pattern is not yet documented in the framework, please create a Pull Request to contribute it.
+**Note**: A comprehensive list of known contract vulnerability patterns is maintained in [vectors.md](./vectors.md).
 
-### Example Structure
+#### Example
 
-If you have findings, organize them like this:
+### Critical Severity Issues
 
-## Critical Severity Issues
-
-### [C-01] Missing Version Control in Timelock Functions
+#### Missing Version Control in Timelock Functions
 
 **Description**: The contract doesn't enforce version requirements for timelock functions, allowing users to accidentally use the wrong transaction version.
 
@@ -173,9 +144,9 @@ function withdraw() {
 
 ---
 
-## Medium Severity Issues
+### Medium Severity Issues
 
-### [M-01] Insufficient Input Validation
+### Insufficient Input Validation
 
 **Description**: Function accepts arbitrary input without proper validation.
 
@@ -185,11 +156,9 @@ function withdraw() {
 
 **Update**: Input validation was implemented for all public functions. The fix was merged in [PR #124](https://github.com/project/repo/pull/124). The development team implemented comprehensive input validation across all affected functions.
 
----
+### Low Severity Issues
 
-## Low Severity Issues
-
-### [L-01] Missing Events
+### Missing Events
 
 **Description**: Important state changes don't emit events.
 
@@ -199,11 +168,9 @@ function withdraw() {
 
 **Update**: Events were added for all state-changing functions. The improvement was merged in [PR #125](https://github.com/project/repo/pull/125). The development team agreed with the recommendation and added comprehensive event logging.
 
----
+### Informational Issues
 
-## Informational Issues
-
-### [I-01] Gas Optimization Opportunity
+#### Gas Optimization Opportunity
 
 **Description**: Function could be optimized to use less gas.
 
