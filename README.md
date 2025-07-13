@@ -18,7 +18,7 @@ The following structure is expected to be followed in audit reports based on thi
 - [Scope](#scope)
 - [System Overview](#system-overview)
 - [Findings](#findings)
-  - [Severity Levels](#severity-levels)
+- [Unit Test Report](#unit-test-report)
 - [Conclusion](#conclusion)
 
 ## Summary
@@ -30,11 +30,11 @@ The Summary table provides a high-level overview of the audit results, including
 - **Issue Counting**: Count by severity and resolution
 - **Resolution Status**: Track resolved (R), partially resolved (PR), and unresolved (U) issues
 - **Severity Classification**: Severity should be assessed in context of the specific contract and project
-  - **Critical**: Leads to fund loss, irreversible contract failure
-  - **High**: Can be exploited for denial of service or logic abuse  
-  - **Medium**: Minor financial risk or degraded functionality
-  - **Low**: Non-exploitable but bad practice or maintainability issue
-  - **Info**: Informational, not risky
+  - **Critical**: Leads to fund loss, irreversible contract failure, data manipulation, etc.
+  - **High**: Can be exploited for denial of service, griefing, or logic abuse, lower scope of impact, might not be exploitable in all cases, etc.
+  - **Medium**: Minor financial risk or degraded functionality, important to fix and cannot lead to fund loss or data manipulation
+  - **Low**: Non-exploitable but bad practice or maintainability issue, unused code, etc.
+  - **Info**: Informational, not risky, Improve understandig, readability, and quality of code
 - **Total Calculation**: Must equal the full issue count
 
 Update this table as the audit progresses, and finalize it before delivery.
@@ -143,7 +143,7 @@ function withdraw() {
 
 ---
 
-### Medium Severity Issues
+### Critical Severity Issues
 
 ### Insufficient Input Validation
 
@@ -155,34 +155,27 @@ function withdraw() {
 
 **Update**: Input validation was implemented for all public functions. The fix was merged in [PR #124](https://github.com/project/repo/pull/124). The development team implemented comprehensive input validation across all affected functions.
 
-### Low Severity Issues
-
-### Missing Events
-
-**Description**: Important state changes don't emit events.
-
-**Impact**: Reduces transparency and makes debugging difficult.
-
-**Recommendation**: Add events for all important state changes.
-
-**Update**: Events were added for all state-changing functions. The improvement was merged in [PR #125](https://github.com/project/repo/pull/125). The development team agreed with the recommendation and added comprehensive event logging.
-
 ### Informational Issues
 
-#### Gas Optimization Opportunity
+#### Duplicate version check
 
-**Description**: Function could be optimized to use less gas.
+**Description**: Duplicate version check is being used when registry is used with factory.
 
-**Impact**: Higher transaction costs for users.
+**Impact**: Redundant version check.
 
-**Recommendation**: Consider gas optimizations.
+**Recommendation**: Remove the version check.
+
+**Update**: Reported
+
+## Unit Test Report
+
 
 
 ## Conclusion
 
 None
 
-
+---
 
 ## Copyright
 
