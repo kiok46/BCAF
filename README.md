@@ -2,7 +2,7 @@
 
 The Bitcoin Cash Audit Framework (BCAF) is a standard designed to help audit smart contracts on the Bitcoin Cash Blockchain. It offers a structured way to spot security issues, operational risks, and check whether contracts follow best practices.
 
-Each contract should be systematically evaluated against a checklist of known vectors that may lead to vulnerabilities. When a new vulnerability is discovered, it can be added to the checklist for future reference—allowing other audits to benefit from prior findings. For every failed check or identified issue, the framework requires clear documentation and reporting, ensuring transparency and actionable remediation guidance.
+Each contract should be systematically evaluated against a checklist of known vectors that may lead to vulnerabilities. When a new vulnerability is discovered, it can be added to the checklist for future reference allowing other audits to benefit from prior findings. For every failed check or identified issue, the framework requires clear documentation and reporting, ensuring transparency and actionable remediation guidance.
 
 As the Bitcoin Cash virtual machine evolves and enables more complex contract structures, BCAF aims to serve as a foundation or even the goto standard for auditing smart contracts on the network.
 
@@ -17,25 +17,13 @@ The following structure is expected to be followed in audit reports based on thi
 - [Summary](#summary)
 - [Scope](#scope)
 - [System Overview](#system-overview)
+- [Test Suite Execution](#test-suite-execution)
 - [Findings](#findings)
-- [Test Report](#test-report)
 - [Conclusion](#conclusion)
 
 ## Summary
 
 The Summary table provides a high-level overview of the audit results, including project details, timeline, technology stack, total number of contracts audited, and issue distribution by severity.
-
-- **Project Information**: Name, audit timeline, and technology stack
-- **Total Contracts**: Number of contracts reviewed
-- **Issue Counting**: Count by severity and resolution
-- **Resolution Status**: Track resolved (R), partially resolved (PR), and unresolved (U) issues
-- **Severity Classification**: Severity should be assessed in context of the specific contract and project
-  - **Critical**: Leads to fund loss, irreversible contract failure, data manipulation, etc.
-  - **High**: Can be exploited for denial of service, griefing, or logic abuse, lower scope of impact, might not be exploitable in all cases, etc.
-  - **Medium**: Minor financial risk or degraded functionality, important to fix and cannot lead to fund loss or data manipulation
-  - **Low**: Non-exploitable but bad practice or maintainability issue, unused code, etc.
-  - **Info**: Informational, not risky, Improve understandig, readability, and quality of code
-- **Total Calculation**: Must equal the full issue count
 
 Update this table as the audit progresses, and finalize it before delivery.
 
@@ -47,11 +35,11 @@ Update this table as the audit progresses, and finalize it before delivery.
 | **Languages**                | Primary smart contract language(s), comma-separated | CashScript                       |
 | **Total Contracts**          | Number of smart contracts audited                   | 9                                |
 | **Total Issues**             | All findings (resolved/partially resolved)          | 2 (2 resolved)                   |
-| **Critical Severity Issues** | Issues that could lead to fund loss                 | 0                                |
-| **High Severity Issues**     | Issues that could cause denial of service           | 0                                |
-| **Medium Severity Issues**   | Minor financial risk or degraded functionality      | 0                                |
-| **Low Severity Issues**      | Non-exploitable but bad practice issues             | 1 (1 resolved)                   |
-| **Notes & Additional Info**  | Informational findings and recommendations          | 1 (1 resolved)                   |
+| **Critical Severity Issues** | Issues that could lead to fund loss, irreversible contract failure, data manipulation, etc. | 0                                |
+| **High Severity Issues**     | Can be exploited for denial of service, griefing, or logic abuse, lower scope of impact, might not be exploitable in all cases, etc. | 0                                |
+| **Medium Severity Issues**   | Minor financial risk or degraded functionality, important to fix and cannot lead to fund loss or data manipulation | 0                                |
+| **Low Severity Issues**      | Non-exploitable but bad practice or maintainability issue, unused code, etc. | 1 (1 resolved)                   |
+| **Notes & Additional Info**  | Informational, not risky, improve understanding, readability, and quality of code | 1 (1 resolved)                   |
 
 ## Scope
 
@@ -105,9 +93,50 @@ The overview may also cover **security considerations**, including built-in prot
 
 Finally, document any notable **innovations, enhancements, or limitations**. This could include improvements in scripting patterns, removal of legacy functionality, or constraints such as script size limits, fee-related tradeoffs, or unsupported edge cases. Where appropriate, link to technical documentation for deeper guidance.
 
+
+## Test Suite Execution
+
+This section documents the execution results of the project's existing test suite. All tests provided by the development team should be run in a clean environment, and their results summarized with pass/fail status, execution time (if notable), and test coverage. This process helps validate that the contracts function as intended and reveals potential runtime issues.
+
+Running the test suite serves as the first line of assurance before deeper manual auditing begins. A successful test run confirms that the code passes basic checks, such as contract/unlocking bytecode size, duplicate functions and variables, invalid casting and more.
+
+Auditors should ensure that the test suite meaningfully exercises the contract logic, covers common and edge-case scenarios, and reflects the intended use cases. If test coverage is insufficient or overly narrow, that should be noted along with recommendations for improvement.
+
+
+#### Example
+
+```shell
+ PASS  test/unit/import.test.ts
+  imports
+    ✓ should import BitCANNArtifacts with all expected contracts (4 ms)
+
+ PASS  test/e2e/auction.test.ts
+  Auction
+    ✓ should start an auction without fail (649 ms)
+    ✓ should pass without change output (621 ms)
+    ✓ should fail without op return output (84 ms)
+    ✓ should fail setting auction capability to none (67 ms)
+
+------------|---------|----------|---------|---------|----------------------------------------------------------------
+File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                              
+------------|---------|----------|---------|---------|----------------------------------------------------------------
+All files   |   50.54 |    20.58 |   35.71 |   54.11 |                                                                
+ lib        |     100 |      100 |     100 |     100 |                                                                
+  index.ts  |     100 |      100 |     100 |     100 |                                                                
+ test       |      50 |    20.58 |   35.71 |   53.57 |                                                                
+  common.ts |   93.33 |        0 |     100 |     100 | 32                                                             
+  utils.ts  |   41.33 |    21.21 |   35.71 |   44.28 | 33,43-50,55-72,78-83,88-94,100-112,118-126,132-140,164,171-173 
+------------|---------|----------|---------|---------|----------------------------------------------------------------
+Test Suites: 2 passed, 2 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        3.45 s, estimated 4 s
+Ran all test suites.
+```
+
 ## Findings
 
-After completing the audit, organize findings by severity level. If there are findings of a particular severity, create a section for that severity level and list each finding as a subheading. A comprehensive list of known contract vulnerability patterns is maintained in [vectors.md](./vectors.md).
+After completing the audit, organize findings by severity level. If there are findings of a particular severity, create a section for that severity level and list each finding as a subheading. A comprehensive list of known contract vulnerability patterns is maintained in [checklist.md](./checklist.md).
 
 #### Example
 
@@ -167,39 +196,6 @@ function withdraw() {
 
 **Update**: Reported
 
-## Test Report
-
-This section documents the execution results of the project's existing test suite. Run all tests provided by the development team and report the pass/fail status, execution times, and test coverage. This validates that the contracts function as intended and helps identify any runtime issues or edge cases.
-#### Example
-
-```shell
- PASS  test/unit/import.test.ts
-  imports
-    ✓ should import BitCANNArtifacts with all expected contracts (4 ms)
-
- PASS  test/e2e/auction.test.ts
-  Auction
-    ✓ should start an auction without fail (649 ms)
-    ✓ should pass without change output (621 ms)
-    ✓ should fail without op return output (84 ms)
-    ✓ should fail setting auction capability to none (67 ms)
-
-------------|---------|----------|---------|---------|----------------------------------------------------------------
-File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                              
-------------|---------|----------|---------|---------|----------------------------------------------------------------
-All files   |   50.54 |    20.58 |   35.71 |   54.11 |                                                                
- lib        |     100 |      100 |     100 |     100 |                                                                
-  index.ts  |     100 |      100 |     100 |     100 |                                                                
- test       |      50 |    20.58 |   35.71 |   53.57 |                                                                
-  common.ts |   93.33 |        0 |     100 |     100 | 32                                                             
-  utils.ts  |   41.33 |    21.21 |   35.71 |   44.28 | 33,43-50,55-72,78-83,88-94,100-112,118-126,132-140,164,171-173 
-------------|---------|----------|---------|---------|----------------------------------------------------------------
-Test Suites: 2 passed, 2 total
-Tests:       5 passed, 5 total
-Snapshots:   0 total
-Time:        3.45 s, estimated 4 s
-Ran all test suites.
-```
 
 ## Conclusion
 
