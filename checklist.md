@@ -28,7 +28,6 @@ These vector might not create a vulnerability for some contract systems but thes
 - Deadlock situations due to category or state changes
 - Missing explicit defining of intermediate states in case of state storage in nfts
 - Unreachable code
-- Variable shadowing
 - Sending mutable or minting tokens to p2pkh or unknown p2sh
 
 ### Critical
@@ -53,12 +52,10 @@ These vector might not create a vulnerability for some contract systems but thes
 - Not enough miner fee
 - Fee or a value below dust
 
-### Tests
-- tests coverage
-
 
 ### Info
 
+- Add message in require statements
 - Documentation and explaination of each step
 - NatSpec style documentation
 - Misleading documentation
