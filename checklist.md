@@ -128,5 +128,4 @@ Contract Foo (bytes reversedCategory) {
 ## Constructor Parameters
 
 The parameters are added inversely to the constructor.
-
 In case of `simulated states` or any other case, it must be used in inverse order.

@@ -106,31 +106,37 @@ Auditors should ensure that the test suite meaningfully exercises the contract l
 #### Example
 
 ```shell
- PASS  test/unit/import.test.ts
+ PASS  test/contracts/registry.test.ts
+  Registry
+    ✓ should fail when sending authorizedThreadNFT to any other address than registry contract (143 ms)
+    ✓ should fail when using incorrect token category from registry contract (70 ms)
+    ✓ should fail when sending incorrect amount to authorizedThreadNFT from registry contract (54 ms)
+    ...
+ PASS  test/import.test.ts
   imports
     ✓ should import BitCANNArtifacts with all expected contracts (4 ms)
+ PASS  test/contracts/bid.test.ts (5.561 s)
+  Bid
+    ✓ should fail with invalid number of inputs (127 ms)
+    ✓ should fail with invalid number of outputs (97 ms)
+ ...
+ PASS  test/contracts/name.test.ts (12.643 s)
+  Name
+    useAuth
+      ✓ should pass with valid use of internal and external auth NFT (685 ms)
+      ✓ should fail due to incorrect lockingbytecode of internalauth output (78 ms)
+    resolveOwnerConflict
+      ✓ should fail with invalid number of inputs (145 ms)
+      ...
+    burn
+      ✓ should fail with invalid number of inputs (47 ms)
+      ✓ should fail with invalid number of outputs (48 ms)
+      ...
 
- PASS  test/e2e/auction.test.ts
-  Auction
-    ✓ should start an auction without fail (649 ms)
-    ✓ should pass without change output (621 ms)
-    ✓ should fail without op return output (84 ms)
-    ✓ should fail setting auction capability to none (67 ms)
-
-------------|---------|----------|---------|---------|----------------------------------------------------------------
-File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                              
-------------|---------|----------|---------|---------|----------------------------------------------------------------
-All files   |   50.54 |    20.58 |   35.71 |   54.11 |                                                                
- lib        |     100 |      100 |     100 |     100 |                                                                
-  index.ts  |     100 |      100 |     100 |     100 |                                                                
- test       |      50 |    20.58 |   35.71 |   53.57 |                                                                
-  common.ts |   93.33 |        0 |     100 |     100 | 32                                                             
-  utils.ts  |   41.33 |    21.21 |   35.71 |   44.28 | 33,43-50,55-72,78-83,88-94,100-112,118-126,132-140,164,171-173 
-------------|---------|----------|---------|---------|----------------------------------------------------------------
-Test Suites: 2 passed, 2 total
-Tests:       5 passed, 5 total
+Test Suites: 10 passed, 10 total
+Tests:       221 passed, 221 total
 Snapshots:   0 total
-Time:        3.45 s, estimated 4 s
+Time:        13.064 s
 Ran all test suites.
 ```
 
